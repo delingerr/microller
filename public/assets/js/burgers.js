@@ -37,7 +37,7 @@ $(document).ready(function() {
         dataType:'json',
         contentType: 'application/json'
       }).then(function(data) {
-        // reload page to display devoured burger in proper column
+
         location.reload();
       });
   
@@ -52,21 +52,20 @@ $(document).ready(function() {
         method: "DELETE",
         url: "/burgers/" + burger_id,
       }).then(function(data) {
-        // reload page to display devoured burger in proper column
+
         location.reload();
       });
   
     });
   
     $(document).on("submit", ".add-burger", function(event) {
-      // Make sure to preventDefault on a submit event.
+
       event.preventDefault();
   
       var newBurger = {
         burger_name: $("#burger_name").val().trim()
       };
-  
-      // Send the POST request.
+
       $.ajax("/burgers", {
         type: "POST",
         data: JSON.stringify(newBurger),
@@ -74,7 +73,7 @@ $(document).ready(function() {
         contentType: 'application/json'
       }).then(function() {
         console.log("added new burger");
-        // Reload the page to get the updated list
+
         location.reload();
       });
     });

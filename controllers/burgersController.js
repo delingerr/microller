@@ -2,7 +2,7 @@ var express = require("express");
 
 var router = express.Router();
 
-var burger = require("../models/burgers.js");
+var burger = require("../models/burger.js");
 
 router.get("/", function(req, res) {
   res.sendFile(path.join(__dirname, "public/index.html"));
@@ -17,9 +17,9 @@ router.get("/burgers", function(req, res) {
 
 router.post("/burgers", function(req, res) {
   burger.create([
-    "devoured", "burger_name"
+    "burger_name"
   ], [
-    req.body.devoured, req.body.burger_name
+    req.body.burger_name
   ], function(result) {
  
     res.json({ id: result.insertId });
@@ -32,7 +32,7 @@ router.put("/burgers/:id", function(req, res) {
   console.log("condition", condition);
 
   burger.update({
-    devoured: req.body.devoured
+    devoured: req.params.id
   }, condition, function(result) {
     if (result.changedRows == 0) {
      
@@ -48,7 +48,6 @@ router.delete("/burgers/:id", function(req, res) {
 
   burger.delete(condition, function(result) {
     if (result.affectedRows == 0) {
-      // If no rows were changed, then the ID must not exist, so 404
       return res.status(404).end();
     } else {
       res.status(200).end();
@@ -56,5 +55,4 @@ router.delete("/burgers/:id", function(req, res) {
   });
 });
 
-// Export routes for server.js to use.
 module.exports = router;
